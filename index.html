@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feather Holidays | Official 3D Luxury Tours & Travel Partner Sri Lanka</title>
+    <meta name="description" content="Unfold the natural beauty of Sri Lanka with Feather Holidays. Your trusted travel partner for unforgettable island adventures. Official address: 256/44, 2nd Lane, New City Gardens, Welivita, Kaduwela. WhatsApp: 0769222180.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js for 3D Background Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Sortable.js for Drag & Drop Admin Builder -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Dynamic Real Photographic & 3D WebGL Canvas Background -->
+    <div class="hero-bg-slideshow">
+        <div class="bg-slide active" style="background-image: url('assets/destinations/kandy_temple.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('imegers/Sigiriya_rock_fortress_at_night_202608281224.jpeg');"></div>
+        <div class="bg-slide" style="background-image: url('imegers/Nine_Arch_Bridge_night_landscape_202608281224.jpeg');"></div>
+        <div class="bg-slide" style="background-image: url('imegers/Colonial_architecture_in_Nuwara_._202608281224.jpeg');"></div>
+        <div class="bg-slide" style="background-image: url('imegers/Galle_Fort_Lighthouse_evening_view_202608281224.jpeg');"></div>
+        <div class="bg-slide" style="background-image: url('imegers/Campfire_on_Pasikuda_beach_shore_202608281227.jpeg');"></div>
+    </div>
+    
+    <canvas id="bg3dCanvas"></canvas>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <span>🌴 Unfold the natural beauty of Sri Lanka with Feather Holidays — Your trusted travel partner! 🌊</span>
+            <span class="badge"><i data-lucide="shield-check"></i> All-Inclusive Tour Packages</span>
+            <span class="badge vehicle-badge"><i data-lucide="car"></i> Private AC Vehicles Fleet</span>
+            <span class="contact-quick">
+                <i data-lucide="phone"></i> <strong>0769222180</strong> | 
+                <i data-lucide="mail"></i> <strong>featherholidays@hotmail.com</strong> | 
+                <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" class="announcement-map-link"><i data-lucide="map-pin"></i> Welivita, Kaduwela</a>
+            </span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" onclick="switchTab('home')">
+                <img src="assets/logo.png" alt="Feather Holidays Logo" class="logo-img">
+                <div class="brand-text">
+                    <span class="brand-title">FEATHER <span class="gold-text">HOLIDAYS</span></span>
+                    <span class="brand-sub">SRI LANKA TOURS & TRAVEL</span>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileNav()">
+                <i data-lucide="menu" id="navToggleIcon"></i>
+            </button>
+
+            <div class="nav-overlay" id="navOverlay" onclick="closeMobileNav()"></div>
+
+            <div class="nav-panel" id="navPanel">
+                <nav class="nav-links">
+                    <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+                        <i data-lucide="home"></i> Home
+                    </button>
+                    <button class="nav-btn" data-tab="map" onclick="switchTab('map')">
+                        <i data-lucide="map-pin"></i> 3D SL Destinations Map
+                    </button>
+                    <button class="nav-btn" data-tab="sl-tours" onclick="switchTab('sl-tours')">
+                        <i data-lucide="palmtree"></i> Sri Lanka Tours
+                    </button>
+                    <button class="nav-btn" data-tab="abroad-tours" onclick="switchTab('abroad-tours')">
+                        <i data-lucide="plane"></i> Abroad Tours
+                    </button>
+                    <button class="nav-btn" data-tab="fleet" onclick="switchTab('fleet')">
+                        <i data-lucide="car"></i> Private Fleet & Vehicles
+                    </button>
+                    <button class="nav-btn" data-tab="reviews" onclick="switchTab('reviews')">
+                        <i data-lucide="star"></i> Google Reviews
+                    </button>
+                    <button class="nav-btn" data-tab="booking" onclick="switchTab('booking')">
+                        <i data-lucide="calendar"></i> Book Now
+                    </button>
+                </nav>
+
+                <div class="nav-actions">
+                    <div id="userProfileHeaderArea">
+                        <button class="btn-outline-3d" onclick="openUserAuthModal('login')">
+                            <i data-lucide="user"></i> Login / Register
+                        </button>
+                    </div>
+                    <button class="admin-btn" onclick="openAdminLoginModal()" title="Admin Drag & Drop Builder & Inbox">
+                        <i data-lucide="shield-check"></i> Admin Center
+                    </button>
+                    <button class="cta-nav-btn" onclick="switchTab('booking')">
+                        Inquire Tour <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Views -->
+    <main class="main-content">
+        <!-- ================= HOME TAB ================= -->
+        <section id="tab-home" class="page-tab active">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Unfold the Natural Beauty of <span class="gradient-text">Sri Lanka</span>
+                    </h1>
+                    <p class="hero-tagline">
+                        "Unfold the natural beauty of Sri Lanka with Feather Holidays. Your trusted travel partner for unforgettable island adventures. 🌴🐘🌊"
+                    </p>
+
+                    <!-- Official Contact Quick Badge / Direct Media Access Panel -->
+                    <div class="hero-official-badge card-3d">
+                        <a href="mailto:featherholidays@hotmail.com" class="official-info-pill email-pill" title="Email Us Direct">
+                            <i data-lucide="mail"></i> featherholidays@hotmail.com
+                        </a>
+                        <a href="https://www.facebook.com/share/1DgSZxFTQJ/" target="_blank" class="official-info-pill fb-pill" title="Official Facebook Page">
+                            <svg class="svg-icon svg-fb" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook Page
+                        </a>
+                        <a href="https://tiktok.com/@featherholidays" target="_blank" class="official-info-pill tiktok-pill" title="Official TikTok Channel">
+                            <svg class="svg-icon svg-tiktok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg> TikTok
+                        </a>
+                        <a href="https://instagram.com/featherholidays" target="_blank" class="official-info-pill insta-pill" title="Official Instagram Page">
+                            <svg class="svg-icon svg-insta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram
+                        </a>
+                        <a href="https://wa.me/94769222180" target="_blank" class="official-info-pill wa-pill" title="Direct WhatsApp Chat">
+                            <i data-lucide="message-circle"></i> Direct WhatsApp: 0769222180
+                        </a>
+                        <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" class="official-info-pill maps-pill" title="Head Office Location">
+                            <i data-lucide="map-pin"></i> Welivita, Kaduwela
+                        </a>
+                    </div>
+
+                    <!-- Quick Filter Search Bar -->
+                    <div class="hero-search-glass card-3d">
+                        <div class="search-field">
+                            <label><i data-lucide="map-pin"></i> Destination</label>
+                            <select id="heroDestSelect">
+                                <option value="all">All Destinations (Kandy Temple, Sigiriya, Nine Arch Bridge, Yala, etc.)</option>
+                                <option value="Kandy">Kandy & Temple of Tooth Relic</option>
+                                <option value="Sigiriya Rock Fortress">Sigiriya Rock Fortress</option>
+                                <option value="Nine Arch Bridge & Ella">Nine Arch Bridge & Ella</option>
+                                <option value="Nuwara Eliya & Lake Gregory">Nuwara Eliya & Lake Gregory</option>
+                                <option value="Yala (Ruhunu) National Park">Yala Leopard Safari</option>
+                                <option value="Galle">Galle Dutch Fort Lighthouse</option>
+                                <option value="Pasikuda">Pasikuda Coastal Beach</option>
+                            </select>
+                        </div>
+                        <div class="search-field">
+                            <label><i data-lucide="car"></i> Preferred Transport</label>
+                            <select id="heroVehicleSelect">
+                                <option value="Private AC Tour Car">Private AC Tour Car</option>
+                                <option value="VIP Luxury Tour Van">VIP Luxury Tour Van</option>
+                                <option value="4x4 Safari Jeep">4x4 Off-Road Safari Jeep</option>
+                            </select>
+                        </div>
+                        <div class="search-field">
+                            <label><i data-lucide="compass"></i> Tour Category</label>
+                            <select id="heroCategorySelect">
+                                <option value="all">All Packages</option>
+                                <option value="Sri Lanka">Sri Lanka Island Tours</option>
+                                <option value="Abroad">Abroad & International Tours</option>
+                            </select>
+                        </div>
+                        <button class="search-btn-3d" onclick="filterAndNavigateTours()">
+                            <i data-lucide="compass"></i> Explore Tours
+                        </button>
+                    </div>
+
+                    <!-- Hero Features Grid -->
+                    <div class="hero-features-grid">
+                        <div class="hero-feature-card card-3d">
+                            <div class="feature-icon"><i data-lucide="car"></i></div>
+                            <div>
+                                <h4>Private AC Vehicles</h4>
+                                <p>Air-Conditioned Comfort & Smooth Ride</p>
+                            </div>
+                        </div>
+                        <div class="hero-feature-card card-3d">
+                            <div class="feature-icon"><i data-lucide="hotel"></i></div>
+                            <div>
+                                <h4>Handpicked Hotels</h4>
+                                <p>Boutique Resorts & Heritage Stays</p>
+                            </div>
+                        </div>
+                        <div class="hero-feature-card card-3d">
+                            <div class="feature-icon"><i data-lucide="binocular"></i></div>
+                            <div>
+                                <h4>Wildlife Safaris</h4>
+                                <p>Yala, Minneriya & Udawalawe Passes</p>
+                            </div>
+                        </div>
+                        <div class="hero-feature-card card-3d">
+                            <div class="feature-icon"><i data-lucide="user-check"></i></div>
+                            <div>
+                                <h4>Expert Local Guides</h4>
+                                <p>Licensed Multi-lingual Tour Guides</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auto-Playing Interactive Promotional Banner Carousel (Image 2 style) -->
+            <section class="promo-banner-slider-section">
+                <div class="section-header center">
+                    <span class="sub-heading"><i data-lucide="sparkles"></i> EXCLUSIVE FLYERS & SPECIAL OFFERS</span>
+                    <h2>Featured <span class="gradient-text">Promotional Offers & Deals</span></h2>
+                </div>
+                
+                <div class="promo-carousel-wrapper">
+                    <div class="promo-carousel-card card-3d">
+                        <div class="promo-slides-container" id="promoCarouselTrack">
+                            <!-- Banner slides rendered dynamically -->
+                        </div>
+
+                        <!-- Carousel Navigation Buttons -->
+                        <button class="promo-nav-btn promo-nav-prev" onclick="prevPromoSlide()" title="Previous Offer">
+                            <i data-lucide="chevron-left"></i>
+                        </button>
+                        <button class="promo-nav-btn promo-nav-next" onclick="nextPromoSlide()" title="Next Offer">
+                            <i data-lucide="chevron-right"></i>
+                        </button>
+
+                        <!-- Carousel Pagination Dots -->
+                        <div class="promo-dots-bar" id="promoCarouselDots">
+                            <!-- Dots rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Quick Marquee Cards Bar -->
+                <div class="marquee-wrapper margin-top">
+                    <div class="marquee-content" id="promoMarqueeContainer">
+                        <!-- Marquee cards rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Vehicle Spotlight -->
+            <section class="vehicle-spotlight-section">
+                <div class="glass-container grid-2-col align-center card-3d">
+                    <div class="spotlight-text">
+                        <span class="spotlight-badge"><i data-lucide="car"></i> Signature Fleet Feature</span>
+                        <h2>Travel in Comfort with <span class="gold-text">Private Air-Conditioned Fleet</span></h2>
+                        <p class="description">
+                            Experience Sri Lanka's winding mountain roads, mist-capped tea estates, and coastal highways in smooth AC comfort. Our private fleet features clean air-conditioned vehicles, comfortable seating, ample luggage space, and dedicated personal chauffeur service.
+                        </p>
+                        <ul class="fleet-features-list">
+                            <li><i data-lucide="check-circle-2"></i> Full Dual Air-Conditioned Comfort for Island Tours</li>
+                            <li><i data-lucide="check-circle-2"></i> Comfortable Reclining Seats & Ample Legroom</li>
+                            <li><i data-lucide="check-circle-2"></i> Experienced Professional English-Speaking Driver</li>
+                            <li><i data-lucide="check-circle-2"></i> Clean, Modern & Well-Maintained Vehicles</li>
+                        </ul>
+                        <div class="spotlight-actions">
+                            <button class="btn-primary-3d" onclick="selectVehicleAndBook('Private AC Tour Car')">
+                                Choose Vehicle for My Tour <i data-lucide="arrow-right"></i>
+                            </button>
+                            <button class="btn-secondary-3d" onclick="switchTab('fleet')">
+                                View Full Private Fleet <i data-lucide="car"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="spotlight-image-container">
+                        <div class="vehicle-3d-card">
+                            <img src="assets/comfort_vehicle.jpg" alt="Private AC Comfort Vehicle Sri Lanka Tour" class="spotlight-img">
+                            <div class="img-badge-overlay">
+                                <span><i data-lucide="sparkles"></i> Comfort Ride</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Destinations Teaser with Real Photos & Cultural Details -->
+            <section class="home-destinations-teaser">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading"><i data-lucide="compass"></i> EXPLORE SRI LANKA</span>
+                        <h2> Iconic <span class="gradient-text">Cultural, Adventure & Wildlife Wonders</span></h2>
+                    </div>
+                    <button class="btn-outline-3d" onclick="switchTab('map')">
+                        Open 3D Interactive Map <i data-lucide="map-pin"></i>
+                    </button>
+                </div>
+
+                <div class="destinations-grid-teaser" id="homeDestinationsGrid">
+                    <!-- Top teaser cards rendered dynamically with real photo assets -->
+                </div>
+            </section>
+
+            <!-- Top Tour Packages Preview -->
+            <section class="home-packages-section">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading"><i data-lucide="package"></i> ALL-INCLUSIVE EXPERIENCE</span>
+                        <h2>Featured <span class="gradient-text">Island Tour Packages</span></h2>
+                    </div>
+                    <div class="toggle-pills">
+                        <button class="pill-btn active" onclick="filterHomePackages('Sri Lanka')">Sri Lanka Tours</button>
+                        <button class="pill-btn" onclick="filterHomePackages('Abroad')">Abroad Tours</button>
+                    </div>
+                </div>
+
+                <div class="packages-grid" id="homePackagesContainer">
+                    <!-- Dynamic Package Cards rendered via JS -->
+                </div>
+            </section>
+
+            <!-- Google Reviews Highlight -->
+            <section class="home-reviews-section">
+                <div class="glass-container center-text card-3d">
+                    <div class="review-stars-big">
+                        ★★★★★ <span>4.9 / 5.0 (280+ Verified Google Reviews)</span>
+                    </div>
+                    <h2>What Travelers Say About <span class="gold-text">Feather Holidays</span></h2>
+                    <p class="review-subtitle">"Feather Holidays made our Sri Lanka trip smooth, luxurious, and completely stress-free!"</p>
+                    <div class="review-slider-preview" id="homeReviewPreview">
+                        <!-- Review Quote Slider -->
+                    </div>
+                    <button class="btn-primary-3d" onclick="switchTab('reviews')">
+                        Read All Reviews & Leave Yours <i data-lucide="star"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Dynamic Photo & Video Showcase Gallery -->
+            <section class="home-gallery-section" id="homeGallerySection">
+                <div class="section-header center">
+                    <span class="sub-heading"><i data-lucide="film"></i> REAL EXPERIENCE SHOWCASE</span>
+                    <h2>Photo & Video <span class="gradient-text">Tour Moments Gallery</span></h2>
+                    <p>Watch real videos and photos of travelers enjoying Feather Holidays tours across Sri Lanka!</p>
+                </div>
+                <div class="gallery-grid" id="homeGalleryGrid">
+                    <!-- Dynamic Photos & Videos rendered here -->
+                </div>
+            </section>
+        </section>
+
+        <!-- ================= SRI LANKA DESTINATIONS & MAP TAB ================= -->
+        <section id="tab-map" class="page-tab">
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="map"></i> INTERACTIVE MAP & EXPLORER</span>
+                <h2>Key Destinations & <span class="gradient-text">Wildlife Reserves of Sri Lanka</span></h2>
+                <p>Click on any destination marker on the interactive map or browse the detailed guide below to explore rich cultural rituals, authentic adventures, games, and wildlife safaris.</p>
+            </div>
+
+            <!-- Map & Search Controls -->
+            <div class="map-layout-wrapper">
+                <div class="map-container-card card-3d">
+                    <div class="map-instructions-overlay">
+                        <i data-lucide="touchpad"></i> Click any pin to open full cultural & adventure details
+                    </div>
+                    <div class="interactive-map-wrapper">
+                        <img src="assets/srilanka_map.png" alt="Sri Lanka Interactive Tour Destinations Map" class="sl-map-base" id="slMapImage">
+                        <!-- Pins rendered over map coordinates -->
+                        <div id="mapPinsContainer" class="pins-layer"></div>
+                    </div>
+                </div>
+
+                <!-- Destination Directory & Search Filter Sidebar -->
+                <div class="destination-sidebar card-3d">
+                    <div class="sidebar-search">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="destSearchInput" placeholder="Search destination (e.g. Kandy, Sigiriya, Nine Arch)..." oninput="filterDestinationsList()">
+                    </div>
+                    <div class="dest-category-tabs">
+                        <button class="dest-cat-btn active" data-cat="all" onclick="filterDestCategory('all')">All (33)</button>
+                        <button class="dest-cat-btn" data-cat="cultural" onclick="filterDestCategory('cultural')">Cultural & Ancient</button>
+                        <button class="dest-cat-btn" data-cat="wildlife" onclick="filterDestCategory('wildlife')">Wildlife & Safaris</button>
+                    </div>
+
+                    <div class="destinations-list-scroll" id="destinationsSidebarList">
+                        <!-- Dynamic destination list items -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Grid View of all 32+ Destinations -->
+            <div class="all-destinations-section">
+                <h3 class="section-title"><i data-lucide="book-open"></i> Complete Sri Lanka Destination, Culture & Activity Guide</h3>
+                <div class="destinations-full-grid" id="destinationsFullGrid">
+                    <!-- All 32+ rich cards -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SRI LANKA TOURS TAB ================= -->
+        <section id="tab-sl-tours" class="page-tab">
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="palmtree"></i> EXPLORE SRI LANKA</span>
+                <h2>All-Inclusive <span class="gradient-text">Sri Lanka Tour Packages</span></h2>
+                <p>Custom tailored island tours featuring private AC vehicle transport, boutique accommodation, authentic cuisine, licensed tour guides, and safari passes. All details fully customizable to your wishes.</p>
+            </div>
+
+            <div class="packages-filter-bar">
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterPackagesGrid('all')">All Sri Lanka Tours</button>
+                    <button class="filter-btn" onclick="filterPackagesGrid('Heritage & Culture')">Heritage & Culture</button>
+                    <button class="filter-btn" onclick="filterPackagesGrid('Wildlife & Safari')">Wildlife & Safaris</button>
+                    <button class="filter-btn" onclick="filterPackagesGrid('Hill Country & Tea')">Hill Country & Tea</button>
+                    <button class="filter-btn" onclick="filterPackagesGrid('Beach & Coastal')">Coastal & Beaches</button>
+                </div>
+            </div>
+
+            <div class="packages-grid-large" id="slToursGrid">
+                <!-- Sri Lanka Packages dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- ================= ABROAD TOURS TAB ================= -->
+        <section id="tab-abroad-tours" class="page-tab">
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="globe"></i> BEYOND SRI LANKA</span>
+                <h2>Curated <span class="gradient-text">Abroad & International Tours</span></h2>
+                <p>Explore international destinations with Feather Holidays' dedicated outbound tour services. Complete hassle-free flight, hotel, and excursion arrangements.</p>
+            </div>
+
+            <div class="packages-grid-large" id="abroadToursGrid">
+                <!-- Abroad Packages dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- ================= VEHICLES FLEET TAB ================= -->
+        <section id="tab-fleet" class="page-tab">
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="car"></i> PRIVATE TRANSPORT FLEET</span>
+                <h2>Select Your Tour Vehicle <span class="gradient-text">(Private AC Car, Van & Safari Jeep)</span></h2>
+                <p>Every Feather Holidays package includes premium private vehicle transport. Choose your favorite vehicle below for your Sri Lankan journey.</p>
+            </div>
+
+            <div class="fleet-grid-3d" id="fleetGridContainer">
+                <!-- Vehicle Cards (Private AC Tour Car, VIP Luxury Van, 4x4 Safari Jeep, Executive Coach) -->
+            </div>
+        </section>
+
+        <!-- ================= GOOGLE REVIEWS TAB ================= -->
+        <section id="tab-reviews" class="page-tab">
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="star"></i> TRAVELER TESTIMONIALS</span>
+                <h2>Google Reviews & <span class="gradient-text">Customer Experiences</span></h2>
+                <p>Read real verified reviews from international and local travelers who explored Sri Lanka with Feather Holidays.</p>
+            </div>
+
+            <div class="reviews-dashboard-layout">
+                <div class="review-stats-card card-3d">
+                    <div class="google-badge">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" class="google-logo">
+                        <span>Google Rating</span>
+                    </div>
+                    <div class="big-score">4.9</div>
+                    <div class="star-rating-icons">★★★★★</div>
+                    <p>Based on 280+ authentic traveler reviews</p>
+                    <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" class="btn-outline-3d margin-top-sm">
+                        <i data-lucide="map-pin"></i> View Google Maps Location
+                    </a>
+                    <button class="btn-primary-3d full-width margin-top-sm" onclick="openAddReviewModal()">
+                        <i data-lucide="pen-tool"></i> Write a Google Review
+                    </button>
+                </div>
+
+                <div class="reviews-feed-container" id="reviewsFeed">
+                    <!-- Dynamic review list -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= BOOKING & INQUIRY FORM TAB ================= -->
+        <section id="tab-booking" class="page-tab">
+            <div class="tab-header center-text">
+                <span class="sub-heading"><i data-lucide="send"></i> START YOUR JOURNEY</span>
+                <h2>Request Your <span class="gradient-text">Customized Tour Package</span></h2>
+                <p>Fill in your preferences below. Our tour experts will build an all-inclusive itinerary (vehicle, hotels, food, safari, tour guide) and respond directly via email or WhatsApp!</p>
+            </div>
+
+            <div class="booking-form-wrapper glass-container card-3d">
+                <form id="tourBookingForm" onsubmit="handleBookingSubmit(event)">
+                    <div class="form-row grid-2">
+                        <div class="form-group">
+                            <label><i data-lucide="user"></i> Full Name *</label>
+                            <input type="text" id="custName" placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="mail"></i> Email Address *</label>
+                            <input type="email" id="custEmail" placeholder="e.g. name@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-2">
+                        <div class="form-group">
+                            <label><i data-lucide="phone"></i> Phone / WhatsApp Number *</label>
+                            <input type="tel" id="custPhone" placeholder="e.g. +94 76 922 2180" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="globe"></i> Tour Type *</label>
+                            <select id="custTourType" required>
+                                <option value="Sri Lanka Island Tour">Sri Lanka Island Tour</option>
+                                <option value="Abroad / Outbound Tour">Abroad / Outbound Tour</option>
+                                <option value="Custom Tailored Itinerary">Custom Tailored Itinerary</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-3">
+                        <div class="form-group">
+                            <label><i data-lucide="calendar"></i> Expected Start Date</label>
+                            <input type="date" id="custStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="clock"></i> Tour Duration</label>
+                            <select id="custDuration">
+                                <option value="3 to 5 Days">3 - 5 Days</option>
+                                <option value="7 to 10 Days">7 - 10 Days</option>
+                                <option value="12 to 15 Days">12 - 15 Days</option>
+                                <option value="Custom Duration">Custom Duration</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="users"></i> Number of Travelers</label>
+                            <input type="number" id="custPax" min="1" value="2">
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-2">
+                        <div class="form-group">
+                            <label><i data-lucide="car"></i> Preferred Transport Vehicle</label>
+                            <select id="custVehicle">
+                                <option value="Private AC Tour Car">Private AC Tour Car (Sedan)</option>
+                                <option value="VIP Luxury Tour Van">VIP Luxury Tour Van</option>
+                                <option value="4x4 Safari Jeep">4x4 Off-Road Safari Jeep</option>
+                                <option value="Executive Minicoach">Executive Minicoach</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="compass"></i> Primary Destinations of Interest</label>
+                            <input type="text" id="custDestinations" placeholder="e.g. Kandy, Sigiriya, Nine Arch Bridge, Nuwara Eliya, Yala Safari, Pasikuda">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i data-lucide="message-square"></i> Special Requirements / Preferences (Hotels, Meals, Safari, Guides, Adventures)</label>
+                        <textarea id="custNotes" rows="4" placeholder="Tell us your preferences (e.g., 5-star boutique hotels, Kandyan cultural dance show, zip-lining, Yala leopard safari, English speaking guide)..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary-3d full-width">
+                        <i data-lucide="send"></i> Submit Tour Request to Feather Holidays
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN DRAG & DROP BUILDER & OWNER DASHBOARD TAB ================= -->
+        <section id="tab-admin" class="page-tab">
+            <!-- Admin Top Security & Control Toolbar -->
+            <div class="admin-header-bar card-3d">
+                <div class="admin-user-info">
+                    <span class="badge admin-status-badge"><i data-lucide="shield-check"></i> Admin User: <strong id="adminUserDisplayName">Feather.holiday</strong></span>
+                    <span class="live-indicator"><span class="pulse-dot"></span> Live Sync Active</span>
+                </div>
+                <div class="admin-header-actions">
+                    <button class="btn-outline-3d" onclick="undoLastAdminChange()" id="btnUndoChange" title="Undo Last Change">
+                        <i data-lucide="undo"></i> Undo Edit
+                    </button>
+                    <button class="btn-outline-3d" onclick="openRevisionHistoryModal()" title="View Snapshot History">
+                        <i data-lucide="history"></i> Revision History
+                    </button>
+                    <button class="btn-outline-3d danger-outline" onclick="resetToDefaultData()" title="Reset All Site Data to Original Defaults">
+                        <i data-lucide="rotate-ccw"></i> Reset Defaults
+                    </button>
+                    <button class="btn-primary-3d danger-btn" onclick="adminLogout()" title="Log out of Admin Portal">
+                        <i data-lucide="log-out"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-header">
+                <span class="sub-heading"><i data-lucide="sliders"></i> FEATHER HOLIDAYS FULL CONTROL CENTER</span>
+                <h2>Fully Customisable <span class="gradient-text">Live Admin Portal</span></h2>
+                <p>Edit text content, phone numbers, images, video embeds, destinations, tour packages, fleet vehicles, marquee flyers, and customer inquiries with real-time live updates & instant Undo options.</p>
+            </div>
+
+            <!-- Admin Navigation Subtabs -->
+            <div class="admin-tabs-nav">
+                <button class="admin-subtab-btn active" data-subtab="inbox" onclick="switchAdminSubtab('inbox')">
+                    <i data-lucide="inbox"></i> Customer Leads <span class="badge-count" id="inboxCount">0</span>
+                </button>
+                <button class="admin-subtab-btn" data-subtab="site-content" onclick="switchAdminSubtab('site-content')">
+                    <i data-lucide="edit-3"></i> General Site Content & Text
+                </button>
+                <button class="admin-subtab-btn" data-subtab="destinations-builder" onclick="switchAdminSubtab('destinations-builder')">
+                    <i data-lucide="map-pin"></i> Destinations Manager
+                </button>
+                <button class="admin-subtab-btn" data-subtab="packages-builder" onclick="switchAdminSubtab('packages-builder')">
+                    <i data-lucide="package-plus"></i> Tour Packages Manager
+                </button>
+                <button class="admin-subtab-btn" data-subtab="fleet-builder" onclick="switchAdminSubtab('fleet-builder')">
+                    <i data-lucide="car"></i> Fleet & Vehicles Manager
+                </button>
+                <button class="admin-subtab-btn" data-subtab="marquee-builder" onclick="switchAdminSubtab('marquee-builder')">
+                    <i data-lucide="layout-grid"></i> Marquee Promo Banners
+                </button>
+                <button class="admin-subtab-btn" data-subtab="media-gallery" onclick="switchAdminSubtab('media-gallery')">
+                    <i data-lucide="film"></i> Photo & Video Gallery Manager
+                </button>
+                <button class="admin-subtab-btn" data-subtab="reviews-builder" onclick="switchAdminSubtab('reviews-builder')">
+                    <i data-lucide="star"></i> Google Reviews Manager
+                </button>
+            </div>
+
+            <!-- Subtab 1: Customer Inquiries Inbox -->
+            <div id="admin-subtab-inbox" class="admin-subtab-content active">
+                <div class="inbox-header-bar">
+                    <h3><i data-lucide="mail"></i> Received Tour Booking Forms & Leads</h3>
+                    <div class="inbox-actions">
+                        <input type="text" id="inboxSearch" placeholder="Search leads by name, email, phone..." oninput="renderAdminInbox()">
+                        <button class="btn-outline-3d" onclick="clearAllInbox()"><i data-lucide="trash-2"></i> Clear Inbox</button>
+                    </div>
+                </div>
+
+                <div class="inbox-list" id="adminInboxList">
+                    <!-- Rendered customer forms -->
+                </div>
+            </div>
+
+            <!-- Subtab 2: General Site Content & Texts Manager -->
+            <div id="admin-subtab-site-content" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="edit-3"></i> Edit Live Website Text & Contact Info</h3>
+                    <p class="sub-text">Modify main headings, contact numbers, email, address, and links. All changes publish live instantly!</p>
+
+                    <form onsubmit="handleSaveGeneralSiteContent(event)">
+                        <div class="form-row grid-2">
+                            <div class="form-group">
+                                <label><i data-lucide="sparkles"></i> Hero Badge Text (Top Badge)</label>
+                                <input type="text" id="adminSiteHeroBadgeText" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i data-lucide="heading"></i> Homepage Hero Title</label>
+                                <input type="text" id="adminSiteHeroTitle" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row grid-2">
+                            <div class="form-group">
+                                <label><i data-lucide="bell"></i> Announcement Bar Text</label>
+                                <input type="text" id="adminSiteAnnouncement" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i data-lucide="type"></i> Hero Tagline / Paragraph Text</label>
+                                <input type="text" id="adminSiteHeroTagline" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row grid-3">
+                            <div class="form-group">
+                                <label><i data-lucide="phone"></i> Phone / WhatsApp Number</label>
+                                <input type="text" id="adminSitePhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i data-lucide="mail"></i> Official Email</label>
+                                <input type="email" id="adminSiteEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i data-lucide="map-pin"></i> Head Office Address</label>
+                                <input type="text" id="adminSiteAddress" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row grid-2">
+                            <div class="form-group">
+                                <label><svg class="svg-icon svg-maps" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg> Google Maps URL</label>
+                                <input type="text" id="adminSiteMapsUrl" required>
+                            </div>
+                            <div class="form-group">
+                                <label><svg class="svg-icon svg-fb" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook Page URL</label>
+                                <input type="text" id="adminSiteFbUrl" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row grid-2">
+                            <div class="form-group">
+                                <label><svg class="svg-icon svg-tiktok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg> TikTok Page URL</label>
+                                <input type="text" id="adminSiteTikTokUrl" placeholder="https://tiktok.com/@featherholidays">
+                            </div>
+                            <div class="form-group">
+                                <label><svg class="svg-icon svg-insta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram Page URL</label>
+                                <input type="text" id="adminSiteInstaUrl" placeholder="https://instagram.com/featherholidays">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary-3d"><i data-lucide="check-circle-2"></i> Publish General Content Live</button>
+                    </form>
+                </div>
+
+                <div class="glass-container card-3d margin-top">
+                    <h3><i data-lucide="image"></i> Manage 3D Hero Background Slideshow (Photos & Videos)</h3>
+                    <div class="add-banner-form grid-2 margin-bottom">
+                        <input type="text" id="newSlideTitle" placeholder="Slide Title (e.g. Kandy Temple of Tooth Relic)">
+                        <div class="dual-media-picker">
+                            <input type="text" id="newSlideUrl" placeholder="Image / Video Web URL...">
+                            <label class="btn-outline-3d browse-file-label">
+                                <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'newSlideUrl', 'newSlidePreview')">
+                            </label>
+                        </div>
+                        <div id="newSlidePreview" class="full-grid-span media-preview-box"></div>
+                        <button class="btn-primary-3d full-grid-span" onclick="addNewHeroSlide()"><i data-lucide="plus"></i> Add Slide</button>
+                    </div>
+                    <div id="adminHeroSlidesList" class="admin-items-list-grid">
+                        <!-- Rendered hero background slides -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 3: Destinations Manager -->
+            <div id="admin-subtab-destinations-builder" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <div class="section-header-inline">
+                        <h3><i data-lucide="map-pin"></i> Destinations & Activities Manager</h3>
+                        <input type="text" id="adminDestSearch" placeholder="Filter destinations..." oninput="renderAdminDestinationsList()" style="width: 250px;">
+                    </div>
+
+                    <!-- Add New Destination Form -->
+                    <form onsubmit="handleAddNewDestination(event)" class="add-dest-form grid-2 margin-bottom">
+                        <input type="text" id="newDestName" placeholder="Destination Name (e.g. Ella Rock Summit)" required>
+                        <select id="newDestCat" required>
+                            <option value="cultural">Cultural & Ancient Kingdom</option>
+                            <option value="wildlife">Wildlife, Safaris & Nature</option>
+                        </select>
+                        <div class="dual-media-picker full-grid-span">
+                            <input type="text" id="newDestImg" placeholder="Image URL (e.g. imegers/Nine_Arch_Bridge_night_landscape_202608281224.jpeg)" required>
+                            <label class="btn-outline-3d browse-file-label">
+                                <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'newDestImg', 'newDestPreview')">
+                            </label>
+                        </div>
+                        <div id="newDestPreview" class="full-grid-span media-preview-box"></div>
+                        <input type="text" id="newDestShortDesc" placeholder="Short Description" required>
+                        <textarea id="newDestFullDesc" class="full-grid-span" rows="2" placeholder="Full Description & History"></textarea>
+                        <textarea id="newDestActivities" class="full-grid-span" rows="2" placeholder="Activities (One activity per line)"></textarea>
+                        <button type="submit" class="btn-primary-3d full-grid-span"><i data-lucide="plus"></i> Add Destination Live</button>
+                    </form>
+
+                    <div id="adminDestinationsList" class="admin-items-list-grid">
+                        <!-- Dest list rendered with edit/delete options -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 4: Add / Edit Tour Packages -->
+            <div id="admin-subtab-packages-builder" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="package-plus"></i> Create & Manage Tour Packages</h3>
+                    <form onsubmit="handleAddNewPackage(event)">
+                        <div class="form-row grid-2">
+                            <input type="text" id="pkgTitle" placeholder="Package Title (e.g. 7 Days Nine Arch & Sigiriya Cultural Tour)" required>
+                            <select id="pkgCategory" required>
+                                <option value="Sri Lanka">Sri Lanka Island Tour</option>
+                                <option value="Abroad">Abroad Tour</option>
+                            </select>
+                        </div>
+                        <div class="form-row grid-2">
+                            <input type="text" id="pkgDuration" placeholder="Duration (e.g. 7 Days / 6 Nights)" required>
+                            <select id="pkgVehicle">
+                                <option value="Private AC Tour Car">Private AC Tour Car</option>
+                                <option value="VIP Luxury Tour Van">VIP Luxury Tour Van</option>
+                                <option value="4x4 Safari Jeep">4x4 Off-Road Safari Jeep</option>
+                            </select>
+                        </div>
+                        <div class="form-row grid-2">
+                            <div class="dual-media-picker full-width">
+                                <input type="text" id="pkgImage" placeholder="Cover Image URL (e.g. imegers/Nine_Arch_Bridge...)" required>
+                                <label class="btn-outline-3d browse-file-label">
+                                    <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                    <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'pkgImage', 'pkgPreview')">
+                                </label>
+                            </div>
+                            <input type="text" id="pkgTag" placeholder="Tag (e.g. Culture & Adventure)">
+                        </div>
+                        <div id="pkgPreview" class="media-preview-box"></div>
+                        <div class="form-group">
+                            <textarea id="pkgHighlights" rows="3" placeholder="Includes / Highlights (One per line)"></textarea>
+                        </div>
+                        <div class="form-row grid-2">
+                            <input type="text" id="pkgPrice" placeholder="Price (e.g. $990 � leave blank to hide)">
+                            <input type="text" id="pkgPriceLabel" placeholder="Price Label (e.g. Per Person)">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="pkgExcludes" rows="2" placeholder="Excludes (One per line � leave blank if none)"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-3d"><i data-lucide="check"></i> Save & Publish Package</button>
+                    </form>
+
+                    <h4 class="margin-top"><i data-lucide="layers"></i> Existing Tour Packages</h4>
+                    <div id="adminPackagesList" class="admin-items-list-grid">
+                        <!-- Packages list rendered with edit/delete -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 5: Fleet & Vehicles Manager -->
+            <div id="admin-subtab-fleet-builder" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="car"></i> Manage Vehicle Fleet</h3>
+                    <p class="sub-text">Add or edit vehicles (comfort cars, vans, safari jeeps, coaches) with custom specs.</p>
+                    <form onsubmit="handleAddNewVehicle(event)" class="grid-2">
+                        <input type="text" id="vehName" placeholder="Vehicle Name (e.g. Private AC Comfort Car)" required>
+                        <input type="text" id="vehCategory" placeholder="Category (e.g. Premium Sedan)" required>
+                        <input type="text" id="vehCapacity" placeholder="Capacity (e.g. 4 Passengers + Guide)" required>
+                        <div class="dual-media-picker">
+                            <input type="text" id="vehImage" placeholder="Image URL (e.g. assets/comfort_car.jpg)" required>
+                            <label class="btn-outline-3d browse-file-label">
+                                <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'vehImage', 'vehPreview')">
+                            </label>
+                        </div>
+                        <div id="vehPreview" class="full-grid-span media-preview-box"></div>
+                        <textarea id="vehSpecs" class="full-grid-span" rows="2" placeholder="Vehicle Specs & Amenities"></textarea>
+                        <button type="submit" class="btn-primary-3d full-grid-span"><i data-lucide="plus"></i> Add Vehicle to Fleet</button>
+                    </form>
+
+                    <h4 class="margin-top"><i data-lucide="car"></i> Current Fleet Vehicles</h4>
+                    <div id="adminFleetList" class="admin-items-list-grid">
+                        <!-- Fleet list rendered with edit/delete -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 6: Drag & Drop Marquee Promo Banner Builder -->
+            <div id="admin-subtab-marquee-builder" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="grip-vertical"></i> Drag & Drop Promotional Banners</h3>
+                    <p class="sub-text">Drag cards up/down to re-order how flyers appear in the homepage auto-scrolling marquee banner!</p>
+
+                    <div class="add-banner-form grid-2 margin-bottom">
+                        <input type="text" id="newBannerTitle" placeholder="Banner Title (e.g. Pasikuda Beach Campfire Offer)">
+                        <input type="text" id="newBannerTag" placeholder="Tag / Offer (e.g. 🔥 UP TO 35% OFF)">
+                        <div class="dual-media-picker full-grid-span">
+                            <input type="text" id="newBannerImage" placeholder="Image / Media Web URL...">
+                            <label class="btn-outline-3d browse-file-label">
+                                <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'newBannerImage', 'newBannerPreview')">
+                            </label>
+                        </div>
+                        <div id="newBannerPreview" class="full-grid-span media-preview-box"></div>
+                        <input type="text" id="newBannerDesc" class="full-grid-span" placeholder="Banner Description / Subtitle (e.g. Private AC Transport & 5-Star Hotel Stay)">
+                        <button class="btn-primary-3d full-grid-span" onclick="addNewPromoBanner()"><i data-lucide="plus"></i> Add Promotional Banner</button>
+                    </div>
+
+                    <div id="dragDropMarqueeList" class="sortable-list">
+                        <!-- Sortable banner cards rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 7: Photo & Video Gallery Manager -->
+            <div id="admin-subtab-media-gallery" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="film"></i> Photo & Video Gallery Manager</h3>
+                    <p class="sub-text">Add photos and video embeds (YouTube / MP4) to showcase real traveler moments on the live website.</p>
+
+                    <form onsubmit="handleAddNewGalleryItem(event)" class="grid-2 margin-bottom">
+                        <input type="text" id="galTitle" placeholder="Item Title (e.g. Sigiriya Sunrise Ballooning)" required>
+                        <select id="galType" required>
+                            <option value="image">Photo / Image</option>
+                            <option value="video">Video Embed / URL</option>
+                        </select>
+                        <div class="dual-media-picker full-grid-span">
+                            <input type="text" id="galUrl" placeholder="Image or Video Web URL (e.g. imegers/Sigiriya...)" required>
+                            <label class="btn-outline-3d browse-file-label">
+                                <i data-lucide="folder-open"></i> Browse Device / Gallery
+                                <input type="file" accept="image/*,video/*" onchange="handleFileSelect(event, 'galUrl', 'galPreview')">
+                            </label>
+                        </div>
+                        <div id="galPreview" class="full-grid-span media-preview-box"></div>
+                        <input type="text" id="galDesc" class="full-grid-span" placeholder="Caption / Description" required>
+                        <button type="submit" class="btn-primary-3d full-grid-span"><i data-lucide="plus"></i> Add to Live Gallery</button>
+                    </form>
+
+                    <h4><i data-lucide="film"></i> Gallery Items List</h4>
+                    <div id="adminGalleryList" class="admin-items-list-grid">
+                        <!-- Gallery items rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 8: Google Reviews Manager -->
+            <div id="admin-subtab-reviews-builder" class="admin-subtab-content">
+                <div class="glass-container card-3d">
+                    <h3><i data-lucide="star"></i> Google Reviews Manager</h3>
+                    <p class="sub-text">Manage customer reviews displayed on the website.</p>
+
+                    <form onsubmit="handleAdminAddReview(event)" class="grid-2 margin-bottom">
+                        <input type="text" id="adminRevName" placeholder="Customer Name" required>
+                        <input type="text" id="adminRevLocation" placeholder="Location / Country" required>
+                        <select id="adminRevStars">
+                            <option value="5">★★★★★ (5 Stars)</option>
+                            <option value="4">★★★★☆ (4 Stars)</option>
+                        </select>
+                        <textarea id="adminRevText" class="full-grid-span" rows="2" placeholder="Review Comment Text" required></textarea>
+                        <button type="submit" class="btn-primary-3d full-grid-span"><i data-lucide="plus"></i> Add Review Live</button>
+                    </form>
+
+                    <h4><i data-lucide="star"></i> Published Google Reviews</h4>
+                    <div id="adminReviewsList" class="admin-items-list-grid">
+                        <!-- Reviews list rendered here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Destination Details & Cultural/Adventure Activities -->
+    <div id="destModal" class="modal-overlay">
+        <div class="modal-card card-3d">
+            <button class="modal-close" onclick="closeDestModal()">&times;</button>
+            <div class="modal-body" id="destModalContent">
+                <!-- Dynamic destination information -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Google Review -->
+    <div id="reviewModal" class="modal-overlay">
+        <div class="modal-card card-3d small-modal">
+            <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+            <h3><i data-lucide="star"></i> Write a Google Review</h3>
+            <p>Share your experience with Feather Holidays!</p>
+            <form onsubmit="handleReviewSubmit(event)">
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="revName" required placeholder="e.g. Sarah Jenkins">
+                </div>
+                <div class="form-group">
+                    <label>Country / City</label>
+                    <input type="text" id="revLocation" placeholder="e.g. Australia / London">
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="revStars">
+                        <option value="5">★★★★★ (5/5 Stars - Outstanding)</option>
+                        <option value="4">★★★★☆ (4/5 Stars - Very Good)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Review Comment *</label>
+                    <textarea id="revComment" rows="4" required placeholder="Describe your tour experience with Feather Holidays..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary-3d full-width">Post Google Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Owner Reply to Customer Inquiry -->
+    <div id="replyModal" class="modal-overlay">
+        <div class="modal-card card-3d">
+            <button class="modal-close" onclick="closeReplyModal()">&times;</button>
+            <h3><i data-lucide="mail"></i> Email Reply to Customer</h3>
+            <div id="replyModalBody">
+                <!-- Pre-populated email details -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Secure Admin Center Login Modal -->
+    <div id="adminLoginModal" class="modal-overlay">
+        <div class="modal-card card-3d admin-login-card">
+            <button class="modal-close" onclick="closeAdminLoginModal()">&times;</button>
+            <div class="admin-login-header center-text">
+                <div class="login-shield-icon"><i data-lucide="shield-check"></i></div>
+                <h3>FEATHER HOLIDAYS <span class="gold-text">ADMIN CENTER</span></h3>
+                <p>Secure Portal — Authorized Access Only</p>
+            </div>
+
+            <div id="adminLoginError" class="login-error-alert" style="display: none;"></div>
+
+            <form onsubmit="handleAdminLoginSubmit(event)" class="admin-login-form">
+                <div class="form-group">
+                    <label><i data-lucide="user"></i> Admin Username *</label>
+                    <input type="text" id="adminUsernameInput" required placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label><i data-lucide="lock"></i> Password *</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="adminPasswordInput" required placeholder="Enter password">
+                        <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility()"><i data-lucide="eye" id="eyeIcon"></i></button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-3d full-width">
+                    <i data-lucide="key-round"></i> Login to Admin Center
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer User Authentication Modal (Login / Register / Reset Password) -->
+    <div id="userAuthModal" class="modal-overlay">
+        <div class="modal-card card-3d user-auth-card">
+            <button class="modal-close" onclick="closeUserAuthModal()">&times;</button>
+            
+            <div class="user-auth-tabs">
+                <button class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">
+                    <i data-lucide="log-in"></i> Sign In
+                </button>
+                <button class="auth-tab-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">
+                    <i data-lucide="user-plus"></i> Register
+                </button>
+                <button class="auth-tab-btn" id="tabBtnForgot" onclick="switchAuthTab('forgot')">
+                    <i data-lucide="key"></i> Reset Password
+                </button>
+            </div>
+
+            <div id="userAuthError" class="login-error-alert" style="display: none;"></div>
+
+            <!-- TAB 1: LOGIN -->
+            <div id="authTabContentLogin" class="auth-tab-content active">
+                <div class="auth-header center-text">
+                    <h3>FEATHER HOLIDAYS <span class="gradient-text">CUSTOMER LOGIN</span></h3>
+                    <p>Sign in to manage your luxury tour bookings & instant inquiries</p>
+                </div>
+
+                <button type="button" class="google-btn full-width margin-bottom" onclick="handleGoogleUserLogin()">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                    Continue with Google Account
+                </button>
+
+                <div class="login-divider">
+                    <span>OR SIGN IN WITH EMAIL</span>
+                </div>
+
+                <form onsubmit="handleUserLoginSubmit(event)">
+                    <div class="form-group">
+                        <label><i data-lucide="mail"></i> Username or Email *</label>
+                        <input type="text" id="userLoginIdentifier" required placeholder="Enter username or email address">
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="lock"></i> Password *</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="userLoginPassword" required placeholder="Enter password">
+                            <button type="button" class="pwd-toggle-btn" onclick="toggleUserPasswordVisibility('userLoginPassword', 'userLoginEyeIcon')"><i data-lucide="eye" id="userLoginEyeIcon"></i></button>
+                        </div>
+                    </div>
+                    <div class="auth-extra-links" style="display: flex; justify-content: flex-end; margin-bottom: 14px;">
+                        <a href="#" onclick="switchAuthTab('forgot'); return false;" class="forgot-link" style="color: var(--accent-gold); font-size: 0.85rem; text-decoration: none;"><i data-lucide="key"></i> Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary-3d full-width">
+                        <i data-lucide="log-in"></i> Sign In to Account
+                    </button>
+                </form>
+                <p class="auth-footer-text center-text" style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                    Don't have an account? <a href="#" onclick="switchAuthTab('register'); return false;" style="color: var(--accent-emerald); font-weight: 700;">Register Now</a>
+                </p>
+            </div>
+
+            <!-- TAB 2: REGISTER -->
+            <div id="authTabContentRegister" class="auth-tab-content">
+                <div class="auth-header center-text">
+                    <h3>CREATE YOUR <span class="gradient-text">CUSTOMER ACCOUNT</span></h3>
+                    <p>Join Feather Holidays for personalized luxury Sri Lanka tour bookings</p>
+                </div>
+
+                <button type="button" class="google-btn full-width margin-bottom" onclick="handleGoogleUserLogin()">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                    Quick Register with Google
+                </button>
+
+                <div class="login-divider">
+                    <span>OR REGISTER WITH DETAILS</span>
+                </div>
+
+                <form onsubmit="handleUserRegisterSubmit(event)">
+                    <div class="form-group">
+                        <label><i data-lucide="user"></i> Full Name *</label>
+                        <input type="text" id="regFullName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="mail"></i> Email Address *</label>
+                        <input type="email" id="regEmail" required placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="at-sign"></i> Choose Username *</label>
+                        <input type="text" id="regUsername" required placeholder="Choose a username">
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="lock"></i> Password *</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="regPassword" required placeholder="Enter password (min 6 chars)">
+                            <button type="button" class="pwd-toggle-btn" onclick="toggleUserPasswordVisibility('regPassword', 'regEyeIcon')"><i data-lucide="eye" id="regEyeIcon"></i></button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary-3d full-width">
+                        <i data-lucide="user-plus"></i> Create Customer Account
+                    </button>
+                </form>
+                <p class="auth-footer-text center-text" style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                    Already have an account? <a href="#" onclick="switchAuthTab('login'); return false;" style="color: var(--accent-emerald); font-weight: 700;">Sign In</a>
+                </p>
+            </div>
+
+            <!-- TAB 3: FORGOT PASSWORD -->
+            <div id="authTabContentForgot" class="auth-tab-content">
+                <div class="auth-header center-text">
+                    <h3>PASSWORD <span class="gold-text">RESET SERVICE</span></h3>
+                    <p>Forgot your password? Enter your email to reset your account password</p>
+                </div>
+
+                <form onsubmit="handleUserResetPasswordSubmit(event)">
+                    <div class="form-group">
+                        <label><i data-lucide="mail"></i> Registered Email Address *</label>
+                        <input type="email" id="forgotEmailInput" required placeholder="Enter your registered email">
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="key"></i> Reset Verification Code *</label>
+                        <div class="code-input-group" style="display: flex; gap: 8px;">
+                            <input type="text" id="forgotCodeInput" required placeholder="Verification code" value="849201">
+                            <button type="button" class="btn-outline-3d" onclick="sendVerificationCode()" style="white-space: nowrap;">
+                                <i data-lucide="send"></i> Send Code
+                            </button>
+                        </div>
+                        <small id="resetCodeMsg" style="color: var(--text-muted); display: block; margin-top: 4px;">Press "Send Code" or use test code `849201`.</small>
+                    </div>
+                    <div class="form-group">
+                        <label><i data-lucide="lock"></i> Enter New Password *</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="forgotNewPassword" required placeholder="Enter new password">
+                            <button type="button" class="pwd-toggle-btn" onclick="toggleUserPasswordVisibility('forgotNewPassword', 'forgotEyeIcon')"><i data-lucide="eye" id="forgotEyeIcon"></i></button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary-3d full-width">
+                        <i data-lucide="shield-check"></i> Set New Password & Sign In
+                    </button>
+                </form>
+                <p class="auth-footer-text center-text" style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                    <a href="#" onclick="switchAuthTab('login'); return false;" style="color: var(--accent-emerald); font-weight: 700;"><i data-lucide="arrow-left"></i> Back to Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer My Bookings & Inquiries Modal -->
+    <div id="myBookingsModal" class="modal-overlay">
+        <div class="modal-card card-3d">
+            <button class="modal-close" onclick="closeMyBookingsModal()">&times;</button>
+            <h3><i data-lucide="calendar"></i> My Tour Inquiries & Booking History</h3>
+            <p class="sub-text" style="margin-bottom: 16px;">View status and replies from Feather Holidays for your submitted requests.</p>
+            <div id="myBookingsList">
+                <!-- Dynamically filled with user's inquiries -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Universal Edit Modal -->
+    <div id="editItemModal" class="modal-overlay">
+        <div class="modal-card card-3d medium-modal">
+            <button class="modal-close" onclick="closeEditItemModal()">&times;</button>
+            <h3 id="editItemTitle"><i data-lucide="edit"></i> Edit Item</h3>
+            <div id="editItemBody">
+                <!-- Dynamically generated edit form fields -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Snapshot Revision History Modal (Undo Timeline) -->
+    <div id="revisionHistoryModal" class="modal-overlay">
+        <div class="modal-card card-3d">
+            <button class="modal-close" onclick="closeRevisionHistoryModal()">&times;</button>
+            <h3><i data-lucide="history"></i> Snapshot Revision History</h3>
+            <p class="sub-text">Select any previous snapshot state to revert changes instantly!</p>
+            <div id="revisionHistoryList" class="history-timeline-list">
+                <!-- Timeline snapshots list rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Showcase Lightbox Modal -->
+    <div id="videoLightboxModal" class="modal-overlay">
+        <div class="modal-card card-3d video-lightbox-card">
+            <button class="modal-close" onclick="closeVideoLightbox()">&times;</button>
+            <div class="video-container" id="videoLightboxContainer">
+                <!-- Embedded Video iframe or video tag -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Floating WhatsApp & 3D Social Media Hub -->
+    <div class="floating-social-hub">
+        <div class="whatsapp-popover" id="waPopover">
+            <button class="popover-close" onclick="dismissWaPopover()">&times;</button>
+            <div class="popover-content">
+                <div class="popover-header">
+                    <img src="assets/logo.png" alt="Feather Holidays" class="popover-avatar">
+                    <div>
+                        <strong>Feather Holidays Support</strong>
+                        <span class="online-indicator">● Online Now</span>
+                    </div>
+                </div>
+                <p>Hello! 🌴 Planning a trip to Sri Lanka? Chat directly with us on WhatsApp for instant custom itineraries & Private Vehicle bookings!</p>
+                <a href="https://wa.me/94769222180?text=Hello%20Feather%20Holidays!%20I%20would%20like%20to%20inquire%20about%20a%20tour%20package%20in%20Sri%20Lanka." target="_blank" class="wa-chat-btn">
+                    <i data-lucide="message-circle"></i> Start Direct Chat (0769222180)
+                </a>
+            </div>
+        </div>
+
+        <div class="social-3d-bar">
+            <a href="https://www.facebook.com/share/1DgSZxFTQJ/" target="_blank" class="social-icon fb-icon" title="Official Facebook Page"><svg class="svg-icon svg-fb" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+            <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" class="social-icon maps-icon" title="Google Maps Location"><i data-lucide="map-pin"></i></a>
+            <a href="https://tiktok.com/@featherholidays" target="_blank" class="social-icon tiktok-icon" title="TikTok"><svg class="svg-icon svg-tiktok" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+            <a href="https://instagram.com/featherholidays" target="_blank" class="social-icon insta-icon" title="Instagram"><svg class="svg-icon svg-insta" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="mailto:featherholidays@hotmail.com" class="social-icon email-icon" title="Email Us"><i data-lucide="mail"></i></a>
+            
+            <a href="https://wa.me/94769222180?text=Hello%20Feather%20Holidays!%20I%20would%20like%20to%20inquire%20about%20a%20tour%20package%20in%20Sri%20Lanka." target="_blank" class="whatsapp-floating-btn" title="Direct WhatsApp Chat">
+                <i data-lucide="message-circle"></i>
+                <span class="pulse-ring"></span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="assets/logo.png" alt="Feather Holidays Logo" class="footer-logo">
+                <h3>FEATHER <span class="gold-text">HOLIDAYS</span></h3>
+                <p class="tagline">"Unfold the natural beauty of Sri Lanka with Feather Holidays. Your trusted travel partner for unforgettable island adventures. 🌴🐘🌊"</p>
+                <div class="footer-social-links">
+                    <a href="https://www.facebook.com/share/1DgSZxFTQJ/" target="_blank" class="footer-soc-btn fb-btn"><svg class="svg-icon svg-fb" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook Page</a>
+                    <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" class="footer-soc-btn gold-btn"><i data-lucide="map-pin"></i> Google Maps Location</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="#" onclick="switchTab('home')">Home</a></li>
+                    <li><a href="#" onclick="switchTab('map')">Sri Lanka Destinations Map</a></li>
+                    <li><a href="#" onclick="switchTab('sl-tours')">Sri Lanka Tours</a></li>
+                    <li><a href="#" onclick="switchTab('abroad-tours')">Abroad Tours</a></li>
+                    <li><a href="#" onclick="switchTab('fleet')">Private Transport Fleet</a></li>
+                    <li><a href="#" onclick="switchTab('reviews')">Google Reviews</a></li>
+                    <li><a href="#" onclick="switchTab('booking')">Book / Inquire Tour</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Official Tour Guide Contact</h4>
+                <p><i data-lucide="map-pin"></i> <strong>Headquarters:</strong> <a href="https://maps.app.goo.gl/yBsHt4qxQU3aCwgy9" target="_blank" style="color: var(--accent-gold); text-decoration: underline;">256/44, 2nd Lane, New City Gardens, Welivita, Kaduwela</a></p>
+                <p><i data-lucide="phone"></i> <strong>WhatsApp / Mobile:</strong> <a href="https://wa.me/94769222180" target="_blank" style="color: var(--accent-emerald);">0769222180</a></p>
+                <p><i data-lucide="mail"></i> <strong>Email:</strong> <a href="mailto:featherholidays@hotmail.com" style="color: #fff;">featherholidays@hotmail.com</a></p>
+                <p><i data-lucide="car"></i> <strong>Signature Fleet:</strong> Private Air-Conditioned Comfort Vehicles</p>
+            </div>
+        </div>
+        <div class="footer-bottom center-text">
+            <p>&copy; 2026 Feather Holidays Sri Lanka. All Rights Reserved. Official Travel Partner — Kaduwela, Sri Lanka.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JS App -->
+    <script src="app.js"></script>
+</body>
+</html>
